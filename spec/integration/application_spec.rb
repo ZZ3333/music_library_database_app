@@ -4,9 +4,8 @@ require_relative '../../app'
 
 describe Application do
   before (:each) do
- reset_albums_table
-  reset_artists_table
-
+    reset_albums_table
+    reset_artists_table 
   end
 
   # This is so we can use rack-test helper methods.
@@ -43,20 +42,6 @@ expect(response.body).to include('OK Computer')
 end
 end
 
-context 'GET /artists' do
-it 'should return the list of all artists' do
-
-    response = get('/artists')
-
-    expected_response = ('Pixies, ABBA, Taylor Swift, Nina Simone')
-    
-    expect(response.status).to eq(200)
-    expect(response.body).to eq(expected_response)
-
-
-
-    end
-end
 
 context 'POST /artists' do
   it 'should create a new artist' do
@@ -82,11 +67,33 @@ end
     end
   end
 
-  context 'get/' do
-    it "it should return an htm code response" do
+  context 'GET /' do
+    it "it should return an html code response" do
       response = get('/')
       expect(response.status).to eq(200)
       expect(response.body).to include '<h1>Welcome to my page</h1>'
     end 
+  end
+
+  context "it returns album information respective to ID" do
+    it 'returns album info with ID of 1' do
+      # Assuming the post with id 1 exists.
+      response = get('/albums/1')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>Doolittle</h1>')
+      expect(response.body).to include('Release year: 1989')
+      expect(response.body).to include('Artist: Pixies')
+    end
+
+    it 'returns album info with ID of 2' do
+      # Assuming the post with id 1 exists.
+      response = get('/albums/2')
+
+      expect(response.status).to eq(200)
+      expect(response.body).to include('<h1>Surfer Rosa</h1>')
+      expect(response.body).to include('Release year: 1988')
+      expect(response.body).to include('Artist: Pixies')
+    end
   end
 end
