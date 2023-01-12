@@ -4,9 +4,11 @@ require_relative '../../app'
 
 describe Application do
   before (:each) do
-  reset_albums_table
+ reset_albums_table
   reset_artists_table
+
   end
+
   # This is so we can use rack-test helper methods.
   include Rack::Test::Methods
 
@@ -19,7 +21,7 @@ context 'GET /albums' do
 
     response = get('/albums')
 
-    expected_response = 'Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring'
+    expected_response = 'Doolittle, Surfer Rosa, Waterloo, Super Trouper, Bossanova, Lover, Folklore, I Put a Spell on You, Baltimore, Here Comes the Sun, Fodder on My Wings, Ring Ring'
     
     expect(response.status).to eq(200)
     expect(response.body).to eq(expected_response)
@@ -57,28 +59,34 @@ it 'should return the list of all artists' do
 end
 
 context 'POST /artists' do
-it 'should create a new artist' do
+  it 'should create a new artist' do
   
   response = post('/artists', name: 'Wild nothing', genre: 'Indie')
   
   expect(response.status).to eq(200)
   expect(response.body).to eq('')
   
-  response = post('/artists')
+  response = get('/artists')
   expect(response.body).to include('Wild nothing')
   
-        end
-      end
+  end
+end
 
-      context 'GET /artists' do
-      it 'lists all the artists' do
+  context 'GET /artists' do
+    it 'lists all the artists' do
 
       response = get('/artists')
-      expected_response = ('Pixies, ABBA, Taylor Swift, Nina Simone, Wild nothing')
+      expected_response = ('Pixies, ABBA, Taylor Swift, Nina Simone')
       expect(response.status).to eq(200)
-      expect(response.body).to eq(expected_response)
+      expect(response.body).to eq expected_response
     end
-end
-end
+  end
 
-
+  context 'get/' do
+    it "it should return an htm code response" do
+      response = get('/')
+      expect(response.status).to eq(200)
+      expect(response.body).to include '<h1>Welcome to my page</h1>'
+    end 
+  end
+end
