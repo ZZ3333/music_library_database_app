@@ -83,7 +83,7 @@ end
   end
 
   context 'get/' do
-    it "it should return an htm code response" do
+    it "it should return an html code response" do
       response = get('/')
       expect(response.status).to eq(200)
       expect(response.body).to include '<h1>Welcome to my page</h1>'
