@@ -1,11 +1,5 @@
-DROP TABLE IF EXISTS artists; 
 
 -- Table Definition
-CREATE TABLE artists (
-    id SERIAL PRIMARY KEY,
-    name text,
-    genre text
-);
 
 TRUNCATE TABLE artists RESTART IDENTITY;
 

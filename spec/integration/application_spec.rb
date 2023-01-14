@@ -2,6 +2,7 @@ require "spec_helper"
 require "rack/test"
 require_relative '../../app'
 
+
 describe Application do
   before (:each) do
     reset_albums_table
@@ -95,5 +96,33 @@ end
       expect(response.body).to include('Release year: 1988')
       expect(response.body).to include('Artist: Pixies')
     end
+
+  context 'GET/artists/:id' do
+    it 'should return an HTML of an artist with ID 3' do
+      response = get('/artists/3')
+      expect(response.status).to eq(200)
+      repo  = ArtistRepository.new
+      artist = repo.find(3)
+      expect(artist.id).to eq(3)
+      expect(artist.name).to eq('Taylor Swift')
+      expect(artist.genre).to eq('Pop')
+        end
+
+  context 'GET/artists' do
+    it "should return an HTML page with the list of artists with the corresponding artist id." do
+    response = get('/artists')
+    expect(response.status).to eq(200)
+    expect(response.body).to include('<a href="/artists">Pixies</a><br />')
+    expect(response.body).to include('<a href="/artists">ABBA</a><br />')
+    expect(response.body).to include('<a href="/artists">Taylor Swift</a><br />')
+    expect(response.body).to include('<a href="/artists">Nina Simone</a><br />')
+
+    p response
+        end
+      end
+    end
   end
 end
+
+# <a href="/hello">Go to the hello page</a>
+# <br />
