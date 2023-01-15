@@ -1,5 +1,5 @@
-require 'artist'
-require 'artist_repository'
+require_relative '../lib/artist'
+require '../lib/artist_repository'
 
 def reset_artists_table
   seed_sql = File.read('spec/seeds/artists_seeds.sql')

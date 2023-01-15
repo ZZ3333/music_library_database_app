@@ -58,18 +58,18 @@ repo.create(new_album)
 
 end
 
-get '/artists' do
-  repo = ArtistRepository.new
-  artists = repo.all
-  
-  response = artists.map do |artist|
-    artist.name
-    
-  end.join(', ')
-  
-    return response
-  
-  end
+# get '/artists' do
+#   repo = ArtistRepository.new
+#   artists = repo.all
+#
+#   response = artists.map do |artist|
+#     artist.name
+#
+#   end.join(', ')
+#
+#     return response
+#
+#   end
 
   post '/artists' do
     repo = ArtistRepository.new
@@ -82,17 +82,17 @@ get '/artists' do
 
 end
 
-get '/artists' do
-  repo = ArtistRepository.new
-  artists = repo.all
-  response = artists.map do |artist|
-    artist.name
-
-  end
-
-    return response
-
-end
+# get '/artists' do
+#   repo = ArtistRepository.new
+#   artists = repo.all
+#   response = artists.map do |artist|
+#     artist.name
+#
+#   end
+#
+#     return response
+#
+# end
 
 get '/artists/:id' do
   artist = ArtistRepository.new

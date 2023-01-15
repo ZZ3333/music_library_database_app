@@ -1,5 +1,5 @@
-require 'album'
-require 'album_repository'
+require_relative '../lib/album'
+require_relative '../lib/album_repository'
 
 def reset_albums_table
   seed_sql = File.read('spec/seeds/albums_seeds.sql')

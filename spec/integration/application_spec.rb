@@ -1,12 +1,18 @@
+require 'rspec'
 require "spec_helper"
 require "rack/test"
 require_relative '../../app'
 
 
+def reset_table
+  seed_sql = File.read('spec/seeds/music_library.sql')
+  connection = PG.connect({ host: '127.0.0.1', dbname: 'music_library_web_test' })
+  connection.exec(seed_sql)
+end
+
 describe Application do
   before (:each) do
-    reset_albums_table
-    reset_artists_table 
+    reset_table
   end
 
   # This is so we can use rack-test helper methods.
@@ -58,15 +64,15 @@ context 'POST /artists' do
   end
 end
 
-  context 'GET /artists' do
-    it 'lists all the artists' do
-
-      response = get('/artists')
-      expected_response = ('Pixies, ABBA, Taylor Swift, Nina Simone')
-      expect(response.status).to eq(200)
-      expect(response.body).to eq expected_response
-    end
-  end
+  # context 'GET /artists' do
+  #   it 'lists all the artists' do
+  #
+  #     response = get('/artists')
+  #     expected_response = ('Pixies, ABBA, Taylor Swift, Nina Simone')
+  #     expect(response.status).to eq(200)
+  #     expect(response.body).to eq expected_response
+  #   end
+  # end
 
   context 'get/' do
     it "it should return an htm code response" do
@@ -112,17 +118,13 @@ end
     it "should return an HTML page with the list of artists with the corresponding artist id." do
     response = get('/artists')
     expect(response.status).to eq(200)
-    expect(response.body).to include('<a href="/artists">Pixies</a><br />')
-    expect(response.body).to include('<a href="/artists">ABBA</a><br />')
-    expect(response.body).to include('<a href="/artists">Taylor Swift</a><br />')
-    expect(response.body).to include('<a href="/artists">Nina Simone</a><br />')
-
-    p response
+    expect(response.body).to include('<a href="/artists/1">Pixies</a>')
+    expect(response.body).to include('<a href="/artists/2">ABBA</a>')
+    expect(response.body).to include('<a href="/artists/3">Taylor Swift</a>')
+    expect(response.body).to include('<a href="/artists/4">Nina Simone</a>')
         end
       end
     end
   end
 end
 
-# <a href="/hello">Go to the hello page</a>
-# <br />

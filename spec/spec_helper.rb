@@ -1,4 +1,4 @@
-require 'database_connection'
+require_relative '../lib/database_connection'
 
 ENV['ENV'] = 'test'
 
